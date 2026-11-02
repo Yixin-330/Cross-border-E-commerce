@@ -1,0 +1,47 @@
+[
+  {
+    "doc_id": "label-25-2021",
+    "source_url": "https://peraturan.bpk.go.id/Download/269197/Permendag%20Nomor%2025%20Tahun%202021%20%281%29.pdf",
+    "collected_at": "2026-11-02",
+    "review_status": "pending",
+    "status": "downloaded",
+    "sha256": "414be8e7e3c1c93e25fecdfed13b55167113c848e817dd429435f15002b721a2",
+    "bytes": 2088818
+  },
+  {
+    "doc_id": "import-37-2025",
+    "source_url": "https://peraturan.bpk.go.id/Download/395126/Permendag%20Nomor%2037%20Tahun%202025.pdf",
+    "collected_at": "2026-11-02",
+    "review_status": "pending",
+    "status": "downloaded",
+    "sha256": "22677ed6a86c125c00dc8db82cc8680dfc9cae243848354ce9b0096f001457f3",
+    "bytes": 1752844
+  },
+  {
+    "doc_id": "import-18-2026",
+    "source_url": "https://peraturan.bpk.go.id/Download/415349/permendag-no-18-tahun-2026.pdf",
+    "collected_at": "2026-11-02",
+    "review_status": "pending",
+    "status": "downloaded",
+    "sha256": "a47b15068504e3f5ebc62b0c762c4a8a6e43da87aae2fffa2d0faa9bee538996",
+    "bytes": 2647398
+  },
+  {
+    "doc_id": "ecommerce-19-2026",
+    "source_url": "https://peraturan.bpk.go.id/Download/415514/permendag-no-19-tahun-2026.pdf",
+    "collected_at": "2026-11-02",
+    "review_status": "pending",
+    "status": "downloaded",
+    "sha256": "98cc1d59b706da0dd27768ac7c58a3bbd4b515596dc083415cdfe2902ef27009",
+    "bytes": 3241564
+  },
+  {
+    "doc_id": "sni-111-2015",
+    "source_url": "https://kualanamu.beacukai.go.id/upload/7421_permenperin_no.pdf",
+    "collected_at": "2026-11-02",
+    "review_status": "pending",
+    "status": "downloaded",
+    "sha256": "96b4b4cd447129a5e42bf575760a4cf4d3f3b8ece7b7a550127876afea1aabd3",
+    "bytes": 848412
+  }
+]

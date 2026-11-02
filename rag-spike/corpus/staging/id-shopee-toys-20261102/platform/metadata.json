@@ -1,0 +1,100 @@
+{
+  "collection_date": "2026-11-02",
+  "records": [
+    {
+      "doc_id": "shopee-id-prohibited-restricted",
+      "source_url": "https://help.shopee.co.id/portal/4/article/71189-Kebijakan-Barang-yang-dilarang-dan-dibatasi",
+      "retrieved_at": "2026-11-02T05:55:18.849724+00:00",
+      "country": "id",
+      "platform": "shopee",
+      "language": "id",
+      "document_type": "platform_policy",
+      "review_status": "staging_not_approved",
+      "scope": "General Indonesian marketplace policy; not toy-specific approval or import clearance",
+      "http_status": 200,
+      "final_url": "https://help.shopee.co.id/portal/4/article/71189-Kebijakan-Barang-yang-dilarang-dan-dibatasi",
+      "content_type": "text/html; charset=utf-8",
+      "file": "shopee-id-prohibited-restricted.html",
+      "sha256": "c1e9cfc2e90b6aee7f2c92e71df4f261ba8761cdc138f00ee7873c7f0d53261b",
+      "bytes": 114742,
+      "text_file": "shopee-id-prohibited-restricted.txt",
+      "text_characters": 12351,
+      "body_markers": {
+        "Merupakan tanggung jawab": true,
+        "SNI": true,
+        "Diubah terakhir": true
+      },
+      "acquisition_status": "downloaded_public_html",
+      "completeness_status": "full_public_page_body_observed",
+      "last_modified_date": "2026-07-31",
+      "publish_date": null,
+      "effective_date": null,
+      "manual_completeness_check": "Opening responsibility paragraph, prohibitions through (xliv), reporting instructions and last-modified footer present."
+    },
+    {
+      "doc_id": "shopee-id-terms",
+      "source_url": "https://help.shopee.co.id/portal/4/article/71187-Syarat-Layanan",
+      "retrieved_at": "2026-11-02T05:55:20.313214+00:00",
+      "country": "id",
+      "platform": "shopee",
+      "language": "id",
+      "document_type": "platform_policy",
+      "review_status": "staging_not_approved",
+      "scope": "General Indonesian marketplace policy; not toy-specific approval or import clearance",
+      "http_status": 200,
+      "final_url": "https://help.shopee.co.id/portal/4/article/71187-Syarat-Layanan",
+      "content_type": "text/html; charset=utf-8",
+      "file": "shopee-id-terms.html",
+      "sha256": "1dbf9258a34e160e5184ba5a756bc6991c2c1de0b29c109a5b79f239161b64db",
+      "bytes": 754358,
+      "text_file": "shopee-id-terms.txt",
+      "text_characters": 133848,
+      "body_markers": {
+        "PENDAHULUAN": true,
+        "PENGECUALIAN DAN BATASAN": true,
+        "Terakhir diubah": true
+      },
+      "acquisition_status": "downloaded_public_html",
+      "completeness_status": "full_public_page_body_observed",
+      "last_modified_date": "2026-10-13",
+      "publish_date": null,
+      "effective_date": null,
+      "manual_completeness_check": "Introduction through section 40.10, legal notice, acceptance statement and last-modified footer present."
+    },
+    {
+      "doc_id": "shopee-id-community",
+      "source_url": "https://help.shopee.co.id/portal/4/article/73507-Peraturan-Komunitas",
+      "retrieved_at": "2026-11-02T05:55:22.066474+00:00",
+      "country": "id",
+      "platform": "shopee",
+      "language": "id",
+      "document_type": "platform_policy",
+      "review_status": "staging_not_approved",
+      "scope": "General Indonesian marketplace policy; not toy-specific approval or import clearance",
+      "http_status": 200,
+      "final_url": "https://help.shopee.co.id/portal/4/article/73507-Peraturan-Komunitas",
+      "content_type": "text/html; charset=utf-8",
+      "file": "shopee-id-community.html",
+      "sha256": "dc6489e8c1ff9304c1b674202c1690533db927e8796fae7154e473199366a833",
+      "bytes": 131021,
+      "text_file": "shopee-id-community.txt",
+      "text_characters": 12940,
+      "body_markers": {
+        "Peraturan Komunitas": true
+      },
+      "acquisition_status": "downloaded_public_html",
+      "completeness_status": "full_public_page_body_observed",
+      "last_modified_date": "2024-05-06",
+      "publish_date": null,
+      "effective_date": null,
+      "manual_completeness_check": "Community rules through item 16, closing feedback paragraph and last-modified footer present."
+    }
+  ],
+  "gaps": [
+    "No toy-specific Shopee local seller certificate-submission policy obtained. These general policies do not establish SNI applicability, certification validity, importer eligibility, or toy category approval."
+  ],
+  "notes": [
+    "Raw HTTP response bytes retained with SHA-256. Extracted text is a convenience derivative, not the canonical original.",
+    "No login, private API, or access-control bypass used. No manifest changes."
+  ]
+}

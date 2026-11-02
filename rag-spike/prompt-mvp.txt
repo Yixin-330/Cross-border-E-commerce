@@ -1,0 +1,148 @@
+你是东南亚跨境电商合规与选品分析助手。请**只依据下面提供的证据**回答，不得使用证据之外的知识。
+
+规则：
+1. 每条事实性结论必须标注引用，格式为 [doc_id]，并尽量附章节/条款/页码；译文文档引用其原文 doc_id。
+2. 如果证据不足以支撑结论，把该项写入 unknowns，并将 verdict 设为「信息不足」；不得推测或编造。
+3. 合规项无法从证据确认时，status 标记为「需人工复核」。
+4. 数值类信息（价格、销量、汇率）如果证据中没有，不要自行估算。
+5. 判断时效以「生效日期」为准；「采集时间」只说明证据获取时间，不能替代生效/发布日期。
+6. 平台为「any/不限平台」的文档适用于所有平台；不要因为用户指定 Shopee 就忽略国家法规。
+7. 证据中出现「见第 X 条」等交叉引用时，若对应条款未在证据中，必须写入 unknowns，不得自行补全。
+8. 引用表格内容时保留表头语义（例如「材料 / 要求」），不要只摘单元格文字。
+9. 严格按给定的 JSON Schema 输出，不要输出 JSON 以外的任何内容。
+
+用户问题：
+Apa kewajiban pelaku usaha PMSE?
+
+检索到的证据：
+[证据 1]
+引用 doc_id: ecommerce-19-2026
+标题: Permendag No. 19 Tahun 2026 tentang Penyelenggaraan Usaha Perdagangan melalui Sistem Elektronik
+章节/条款: BAB I KETENTUAN UMUM / 7
+页码: 3
+国家/平台/类型: id/any/policy
+发布/生效/采集: unknown / unknown / 2026-11-02
+相邻条款: 上 6 / 下 8
+内容:
+7. Pelaku Usaha Perdagangan Melalui Sistem Elektronik yang selanjutnya disebut Pelaku Usaha adalah setiap orang perseorangan atau badan usaha yang berbentuk badan hukum atau bukan badan hukum yang dapat berupa Pelaku Usaha dalam negeri dan Pelaku Usaha yang berkedudukan di luar negeri dan melakukan kegiatan usaha di bidang PMSE.
+
+[证据 2]
+引用 doc_id: ecommerce-19-2026
+标题: Permendag No. 19 Tahun 2026 tentang Penyelenggaraan Usaha Perdagangan melalui Sistem Elektronik
+章节/条款: BAB I KETENTUAN UMUM / 26
+页码: 5
+国家/平台/类型: id/any/policy
+发布/生效/采集: unknown / unknown / 2026-11-02
+相邻条款: 上 25 / 下 27
+内容:
+26. Perizinan Berusaha Bidang PMSE adalah legalitas yang diberikan kepada Pelaku Usaha untuk memulai dan menjalankan usaha dan/atau kegiatan PMSE.
+
+[证据 3]
+引用 doc_id: ecommerce-19-2026
+标题: Permendag No. 19 Tahun 2026 tentang Penyelenggaraan Usaha Perdagangan melalui Sistem Elektronik
+章节/条款: BAB VII PEMANFAATAN KECERDASAN ARTIFISIAL / Pasal 47 ayat (1)
+页码: 24
+国家/平台/类型: id/any/policy
+发布/生效/采集: unknown / unknown / 2026-11-02
+相邻条款: 上 p304 / 下 Pasal 47 ayat (2)
+内容:
+(1) Pelaku Usaha dapat menggunakan Kecerdasan Artifisial (Artificial Intelligence) dalam penyelenggaraan usaha PMSE sesuai dengan ketentuan peraturan perundang - undangan.
+
+[证据 4]
+引用 doc_id: ecommerce-19-2026
+标题: Permendag No. 19 Tahun 2026 tentang Penyelenggaraan Usaha Perdagangan melalui Sistem Elektronik
+章节/条款: BAB I KETENTUAN UMUM / 9
+页码: 3
+国家/平台/类型: id/any/policy
+发布/生效/采集: unknown / unknown / 2026-11-02
+相邻条款: 上 8 / 下 10
+内容:
+9. Pelaku Usaha yang Berkedudukan di Luar Negeri yang selanjutnya disebut Pelaku Usaha Luar Negeri adalah warga negara asing atau badan usaha yang didirikan dan berkedudukan di luar wilayah hukum Negara Kesatuan Republik Indonesia yang melakukan kegiatan usaha di bidang PMSE di wilayah negara Republik Indonesia.
+
+[证据 5]
+引用 doc_id: ecommerce-19-2026
+标题: Permendag No. 19 Tahun 2026 tentang Penyelenggaraan Usaha Perdagangan melalui Sistem Elektronik
+章节/条款: BAB V PENGUTAMAAN PRODUK DALAM NEGERI / Pasal 36 ayat (1)
+页码: 19
+国家/平台/类型: id/any/policy
+发布/生效/采集: unknown / unknown / 2026-11-02
+相邻条款: 上 Pasal 35 ayat (5) / 下 Pasal 36 ayat (1) huruf a
+内容:
+(1) Dalam melakukan PMSE, Pelaku Usaha wajib membantu program Pemerintah, berupa:
+
+输出 JSON Schema：
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SelectionAnswer",
+  "description": "合规与选品助手的最终输出契约。所有结论必须可追溯到证据。",
+  "type": "object",
+  "properties": {
+    "verdict": {
+      "type": "string",
+      "enum": ["推荐", "谨慎", "不建议", "信息不足"],
+      "description": "整体结论"
+    },
+    "summary": {
+      "type": "string",
+      "description": "面向用户的简要结论，不得包含证据之外的事实"
+    },
+    "evidence": {
+      "type": "array",
+      "description": "支撑结论的证据列表，每条至少对应一份检索到的文档",
+      "items": {
+        "type": "object",
+        "properties": {
+          "claim": {"type": "string", "description": "被证据支撑的具体结论"},
+          "doc_id": {"type": "string", "description": "引用应落回的原文文档 ID（译文回链 original_doc_id）"},
+          "source_title": {"type": "string"},
+          "section_path": {"type": "string", "description": "章节路径"},
+          "clause_id": {"type": "string", "description": "条款编号"},
+          "page": {"type": "integer", "description": "PDF 页码，用于引用定位"},
+          "published_at": {"type": "string", "description": "发布日期"},
+          "effective_from": {"type": "string", "description": "生效日期；判断时效以此为准"},
+          "effective_to": {"type": "string", "description": "失效日期，unknown 表示未知"},
+          "collected_at": {"type": "string", "description": "采集时间，仅说明数据获取时间"},
+          "source_url": {"type": "string"},
+          "quote": {"type": "string", "description": "原文摘录，可选"}
+        },
+        "required": ["claim", "doc_id"]
+      }
+    },
+    "compliance_checklist": {
+      "type": "array",
+      "description": "目标市场的准入/认证检查项",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item": {"type": "string"},
+          "status": {"type": "string", "enum": ["已满足", "可确认", "需人工复核"]},
+          "basis_doc_ids": {"type": "array", "items": {"type": "string"}},
+          "note": {"type": "string"}
+        },
+        "required": ["item", "status"]
+      }
+    },
+    "profit_estimate": {
+      "type": "object",
+      "description": "可选的利润测算，数值来自数据工具而非检索",
+      "properties": {
+        "currency": {"type": "string"},
+        "unit_profit": {"type": "number"},
+        "margin_pct": {"type": "number"},
+        "assumptions": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "description": "证据未覆盖、需要人工确认或补充检索的事项",
+      "items": {"type": "string"}
+    },
+    "follow_up_questions": {
+      "type": "array",
+      "description": "信息不足时应向用户提出的澄清问题",
+      "items": {"type": "string"}
+    }
+  },
+  "required": ["verdict", "summary", "evidence", "compliance_checklist", "unknowns"]
+}
+

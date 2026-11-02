@@ -1,0 +1,2 @@
+# 向量检索依赖（安装在 rag-spike/.venv-embed）
+fastembed>=0.9.1

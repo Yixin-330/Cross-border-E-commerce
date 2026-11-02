@@ -1,0 +1,20 @@
+# fastembed 模型缓存
+rag-spike/.cache/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# 日志
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

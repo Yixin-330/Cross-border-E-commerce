@@ -1,0 +1,115 @@
+[
+  {
+    "doc_id": "sni-24-2013",
+    "source_url": "https://peraturan.go.id/files/bn566-2013.pdf",
+    "collected_at": "2026-11-02",
+    "review_status": "pending",
+    "status": "failed",
+    "error": "<urlopen error _ssl.c:993: The handshake operation timed out>"
+  },
+  {
+    "doc_id": "sni-55-2013",
+    "source_url": "https://kualanamu.beacukai.go.id/upload/permenperind_no.pdf",
+    "collected_at": "2026-11-02",
+    "review_status": "pending",
+    "final_url": "https://kualanamu.beacukai.go.id/upload/permenperind_no.pdf",
+    "status": "downloaded",
+    "sha256": "d6f563ab83f0362d468cd3c28f1168aa034ca891f135dd7d5d1a40c636aa82df",
+    "bytes": 57636,
+    "pages": 6,
+    "empty_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "first_page": "",
+    "last_page": ""
+  },
+  {
+    "doc_id": "sni-111-2015",
+    "source_url": "https://peraturan.go.id/files/bn2009-2015.pdf",
+    "collected_at": "2026-11-02",
+    "review_status": "pending",
+    "status": "failed",
+    "error": "<urlopen error _ssl.c:993: The handshake operation timed out>"
+  },
+  {
+    "doc_id": "sni-29-2018",
+    "source_url": "https://peraturan.go.id/files/bn1427-2018.pdf",
+    "collected_at": "2026-11-02",
+    "review_status": "pending",
+    "status": "failed",
+    "error": "<urlopen error _ssl.c:993: The handshake operation timed out>"
+  },
+  {
+    "doc_id": "label-25-2021",
+    "source_url": "https://jdih.kemendag.go.id/pdf/Regulasi/2021/PERMENDAG%20NOMOR%2025%20TAHUN%202021.pdf",
+    "collected_at": "2026-11-02",
+    "review_status": "pending",
+    "status": "failed",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "doc_id": "import-23-2025",
+    "source_url": "https://peraturan.bpk.go.id/Download/392412/Permendag%20Nomor%2023%20Tahun%202025%20tentang%20Kebijakan%20dan%20Pengaturan%20Impor%20Barang%20Konsumsi.pdf",
+    "collected_at": "2026-11-02",
+    "review_status": "pending",
+    "final_url": "https://peraturan.bpk.go.id/Download/392412/Permendag%20Nomor%2023%20Tahun%202025%20tentang%20Kebijakan%20dan%20Pengaturan%20Impor%20Barang%20Konsumsi.pdf",
+    "status": "downloaded",
+    "sha256": "e611a5bfe8b526d951b90dfe3769499aa98d8e5ceec87ac15e8b1487f6d01b74",
+    "bytes": 3977139,
+    "pages": 159,
+    "empty_pages": [],
+    "first_page": "PERATURAN MENTERI PERDAGANGAN REPUBLIK INDONESIA \nNOMOR 23 TAHUN 2025 \nTENTANG \nKEBIJAKAN DAN PENGATURAN IMPOR  \nBARANG KONSUMSI \n \nDENGAN RAHMAT TUHAN YANG MAHA ESA \n \nMENTERI PERDAGANGAN REPUBLIK INDONESIA, \n \n \nMenimbang   :  a.  bahwa untuk memperkuat efektivitas pengendalian impor \nbarang konsumsi, perlu mengatur kembali kebijakan dan \npengaturan impor barang konsumsi; \n  b. bahwa kebijakan dan pengaturan impor barang konsumsi \nsebagaimana diatur dalam Peraturan Menteri \nPerdagangan Nomor 36 Tahun 2023 tentang Kebijakan \ndan Pengaturan Impor sebagaimana telah beberapa kali \ndiubah terakhir dengan Peraturan Menteri Perdagangan \nNomor 8 Tahun 2024 tentang Perubahan Ketiga atas \nPeraturan Menteri Perdagangan Nomor 36 Tahun 2023 \ntentang Kebijakan dan Pengaturan Impor sudah tidak \nsesuai dengan perkembangan dan kebutuhan hukum, \nsehingga perlu diganti; \n  c.  bahwa berdasarkan pertimbangan sebagaimana \ndimaksud dalam huruf a dan huruf b, perlu menetapkan \nPeraturan Menteri Perdagangan tentang Kebijakan dan \nPengaturan Impor Barang Konsumsi; \n \nMengingat    :  1.   Pasal 17 ayat (3) Undang -Undang Dasar Negara Republik \nIndonesia Tahun 1945; \n2. Undang-Undang Nomor 7 Tahun 1994 ten",
+    "last_page": "-29- \n \n \nCatatan: \n- BK = Barang Komplementer; BTP = Barang untuk Keperluan Tes Pasar; dan BPJ = Barang untuk Keperluan Pelayanan Purna Jual. \n \n \n \nMENTERI PERDAGANGAN REPUBLIK INDONESIA, \n \n  ttd. \n \nBUDI SANTOSO \n \n \n \n \n \n   \nNo Kelompok \nKomoditi \nCakupan \nBarang \nJenis PI \nLS \nPengawasan \nPersyaratan Keterangan BK BTP BPJ Border  Post \nBorder \nBarang (supplier). \n "
+  },
+  {
+    "doc_id": "import-16-2025",
+    "source_url": "https://peraturan.bpk.go.id/Download/384921/Permendag%20Nomor%2016%20tahun%202025.pdf",
+    "collected_at": "2026-11-02",
+    "review_status": "pending",
+    "final_url": "https://peraturan.bpk.go.id/Download/384921/Permendag%20Nomor%2016%20tahun%202025.pdf",
+    "status": "downloaded",
+    "sha256": "120f588ff62ef29e39cf2e3090714fd7be25edc291804d06a95803f9b5721b1b",
+    "bytes": 5068085,
+    "pages": 119,
+    "empty_pages": [
+      107,
+      108,
+      110,
+      111,
+      113,
+      115,
+      117
+    ],
+    "first_page": "PERATURAN MENTERI PERDAGANGAN REPUBLIK INDONESIA \n                                          NOMOR 16 TAHUN 2025 \nTENTANG \nKEBIJAKAN DAN PENGATURAN IMPOR  \n \nDENGAN RAHMAT TUHAN YANG MAHA ESA \n \nMENTERI PERDAGANGAN REPUBLIK INDONESIA, \n \n \nMenimbang   :  a.  bahwa untuk  mendukung pelaksanaan kegiatan \nperdagangan luar negeri melalui pengendalian di bidang \nimpor, perlu mengatur kembali kebijakan dan \npengaturan impor; \n  b. bahwa berdasarkan pertimbangan sebagaimana \ndimaksud dalam huruf a, serta untuk melaksanakan \nketentuan Pasal 3 ayat (3), Pasal 4 ayat (3), Pasal 6 ayat \n(9), Pasal 7 ayat (6), Pasal 9 ayat (3), dan Pasal 12 ayat (3) \nPeraturan Pemerintah Nomor 29 Tahun 2021 tentang \nPenyelenggaraan Bidang Perdagangan dan Pasal 101 ayat \n(5) Peraturan Pemerintah Nomor 40 Tahun 2021 tentang \nPenyelenggaraan Kawasan Ekonomi Khusus, perlu \nmenetapkan Peraturan Menteri Perdagangan tentang \nKebijakan dan Pengaturan Impor; \n \nMengingat    :  1.   Pasal 17 ayat (3) Undang -Undang Dasar Negara Republik \nIndonesia Tahun 1945; \n2. Undang-Undang Nomor 7 Tahun 1994 tentang \nPengesahan Agreement Establishing the World Trade \nOrganization (Persetujuan Pembentukan Organisasi \nPerdagangan Dunia",
+    "last_page": "- 14 - \n \n \n \n \n \n \n \nMENTERI PERDAGANGAN REPUBLIK INDONESIA, \n \nttd. \n \nBUDI SANTOSO \n \n \n \n "
+  },
+  {
+    "doc_id": "import-37-2025",
+    "source_url": "https://jdih.kemendag.go.id/pdf/Regulasi/2025/Permendag%20Nomor%2037%20Tahun%202025%20tentang%20Perubahan%20atas%20Permendag%20Nomor%2016%20Tahun%202025.pdf",
+    "collected_at": "2026-11-02",
+    "review_status": "pending",
+    "status": "failed",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "doc_id": "import-18-2026",
+    "source_url": "https://jdih.kemendag.go.id/peraturan/download/3357/2",
+    "collected_at": "2026-11-02",
+    "review_status": "pending",
+    "status": "failed",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "doc_id": "ecommerce-19-2026",
+    "source_url": "https://jdih.kemendag.go.id/pdf/Regulasi/2026/PERMENDAG%2019%20TAHUN%202026.pdf",
+    "collected_at": "2026-11-02",
+    "review_status": "pending",
+    "status": "failed",
+    "error": "HTTP Error 404: Not Found"
+  }
+]
