@@ -6,8 +6,13 @@
   "properties": {
     "verdict": {
       "type": "string",
-      "enum": ["推荐", "谨慎", "不建议", "信息不足"],
-      "description": "整体结论"
+      "enum": [
+        "推荐",
+        "谨慎",
+        "不建议",
+        "信息不足"
+      ],
+      "description": "整体结论。合规/事实查询在核心答案有依据时用「谨慎」；仅当核心问题无法从证据回答时用「信息不足」；「推荐/不建议」只用于选品建议。"
     },
     "summary": {
       "type": "string",
@@ -19,20 +24,61 @@
       "items": {
         "type": "object",
         "properties": {
-          "claim": {"type": "string", "description": "被证据支撑的具体结论"},
-          "doc_id": {"type": "string", "description": "引用应落回的原文文档 ID（译文回链 original_doc_id）"},
-          "source_title": {"type": "string"},
-          "section_path": {"type": "string", "description": "章节路径"},
-          "clause_id": {"type": "string", "description": "条款编号"},
-          "page": {"type": "integer", "description": "PDF 页码，用于引用定位"},
-          "published_at": {"type": "string", "description": "发布日期"},
-          "effective_from": {"type": "string", "description": "生效日期；判断时效以此为准"},
-          "effective_to": {"type": "string", "description": "失效日期，unknown 表示未知"},
-          "collected_at": {"type": "string", "description": "采集时间，仅说明数据获取时间"},
-          "source_url": {"type": "string"},
-          "quote": {"type": "string", "description": "原文摘录，可选"}
+          "claim": {
+            "type": "string",
+            "description": "被证据支撑的具体结论"
+          },
+          "doc_id": {
+            "type": "string",
+            "description": "引用应落回的原文文档 ID（译文回链 original_doc_id）"
+          },
+          "source_title": {
+            "type": "string"
+          },
+          "section_path": {
+            "type": "string",
+            "description": "章节路径"
+          },
+          "clause_id": {
+            "type": "string",
+            "description": "条款编号"
+          },
+          "page": {
+            "type": "integer",
+            "description": "PDF 页码，用于引用定位"
+          },
+          "published_at": {
+            "type": "string",
+            "description": "发布日期"
+          },
+          "effective_from": {
+            "type": "string",
+            "description": "生效日期；判断时效以此为准"
+          },
+          "effective_to": {
+            "type": "string",
+            "description": "失效日期，unknown 表示未知"
+          },
+          "collected_at": {
+            "type": "string",
+            "description": "采集时间，仅说明数据获取时间"
+          },
+          "source_url": {
+            "type": "string"
+          },
+          "quote": {
+            "type": "string",
+            "description": "原文连续摘录；必须能在证据原文中找到；无法逐字引用时留空，不要改写或拼接"
+          },
+          "evidence_id": {
+            "type": "string",
+            "description": "输入证据包中的证据ID，如E1"
+          }
         },
-        "required": ["claim", "doc_id"]
+        "required": [
+          "claim",
+          "doc_id"
+        ]
       }
     },
     "compliance_checklist": {
@@ -41,34 +87,74 @@
       "items": {
         "type": "object",
         "properties": {
-          "item": {"type": "string"},
-          "status": {"type": "string", "enum": ["已满足", "可确认", "需人工复核"]},
-          "basis_doc_ids": {"type": "array", "items": {"type": "string"}},
-          "note": {"type": "string"}
+          "item": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "已满足",
+              "可确认",
+              "需人工复核"
+            ]
+          },
+          "basis_doc_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "note": {
+            "type": "string"
+          }
         },
-        "required": ["item", "status"]
+        "required": [
+          "item",
+          "status"
+        ]
       }
     },
     "profit_estimate": {
       "type": "object",
       "description": "可选的利润测算，数值来自数据工具而非检索",
       "properties": {
-        "currency": {"type": "string"},
-        "unit_profit": {"type": "number"},
-        "margin_pct": {"type": "number"},
-        "assumptions": {"type": "array", "items": {"type": "string"}}
+        "currency": {
+          "type": "string"
+        },
+        "unit_profit": {
+          "type": "number"
+        },
+        "margin_pct": {
+          "type": "number"
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
     "unknowns": {
       "type": "array",
       "description": "证据未覆盖、需要人工确认或补充检索的事项",
-      "items": {"type": "string"}
+      "items": {
+        "type": "string"
+      }
     },
     "follow_up_questions": {
       "type": "array",
       "description": "信息不足时应向用户提出的澄清问题",
-      "items": {"type": "string"}
+      "items": {
+        "type": "string"
+      }
     }
   },
-  "required": ["verdict", "summary", "evidence", "compliance_checklist", "unknowns"]
+  "required": [
+    "verdict",
+    "summary",
+    "evidence",
+    "compliance_checklist",
+    "unknowns"
+  ]
 }

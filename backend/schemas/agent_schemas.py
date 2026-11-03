@@ -2,6 +2,20 @@
 Agent Communication Schemas — Structured Output definitions for all Sub-Agents.
 Each schema is a JSON Schema dict passed to Claude's structured output tool_use.
 """
+import json
+from pathlib import Path
+
+_RAG_SCHEMA_PATH = (
+    Path(__file__).resolve().parents[2]
+    / "rag-spike" / "schemas" / "selection_answer.schema.json"
+)
+_rag_schema = json.loads(_RAG_SCHEMA_PATH.read_text(encoding="utf-8"))
+_rag_schema.pop("$schema", None)
+
+KNOWLEDGE_AGENT_SCHEMA = {
+    "name": "selection_answer",
+    "schema": _rag_schema,
+}
 
 # ── Trend Agent ──
 

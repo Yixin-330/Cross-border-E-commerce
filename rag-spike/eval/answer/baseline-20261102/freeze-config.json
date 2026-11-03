@@ -1,0 +1,12 @@
+{
+  "questions_sha256": "67acafa21e29cf3b8722784649a3272066b6d79e628cb4dee76ef6f39c40da63",
+  "index_sha256": "7c789517215184e1a983079da06519c2f7b919687fdf3fe6496cf34fe36770fb",
+  "snapshot": "2026-11-02T07:19:40+00:00",
+  "retrieval": "bm25 + zh expansion, no rerank",
+  "note": "Embedding venv launcher unavailable; explicit baseline, not auto/rerank",
+  "source_hashes": {
+    "answer_eval.py": "d3e22e69d870821b0f907d04b68998925341bde41096d7e5292d1c2836d95c04",
+    "retrieval.py": "e2030c38f55109cf842f54f78e2815457d8feced6f00d3a8b4e872a99a0570bf",
+    "query_expansion.py": "5f21dc163b86edc5397591dcb1deecbec6918bb2c98ced8eb3f9d8e2535a55f1"
+  }
+}

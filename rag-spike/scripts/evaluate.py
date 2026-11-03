@@ -82,6 +82,8 @@ def main() -> None:
     parser.add_argument("--rerank-pool", type=int, default=50,
                         help="第一阶段召回、用于重排的候选数")
     parser.add_argument("--rerank-model", default="BAAI/bge-reranker-v2-m3-int8")
+    parser.add_argument("--expand", action="store_true",
+                        help="中文查询追加印尼语同义词后再召回（rerank 仍用原查询）")
     args = parser.parse_args()
 
     allowed = {"sample", "ready"}
@@ -143,31 +145,37 @@ def main() -> None:
         )
 
     for q in answerable:
+        search_query = q["question"]
+        expanded_terms: list[str] = []
+        from query_expansion import expand_query, should_expand
+        if should_expand(q["question"], args.mode, args.expand):
+            search_query, expanded_terms = expand_query(q["question"])
+
         if args.rerank:
             from vector_retrieval import aggregate_by_doc, rerank_results
             stage1 = search(
-                q["question"],
+                search_query,
                 q.get("country") or None,
                 q.get("platform") or None,
                 aggregate_docs=False,
                 top_k=args.rerank_pool,
             )
             reranked = rerank_results(
-                q["question"], stage1, top_k=args.rerank_pool,
+                search_query, stage1, top_k=args.rerank_pool,
                 model_name=args.rerank_model,
             )
             results = aggregate_by_doc(reranked, args.top)
             evidence_results = reranked[:args.evidence_top] if q.get("gold_evidence") else []
         else:
             results = search(
-                q["question"],
+                search_query,
                 q.get("country") or None,
                 q.get("platform") or None,
                 aggregate_docs=True,
                 top_k=args.top,
             )
             evidence_results = search(
-                q["question"],
+                search_query,
                 q.get("country") or None,
                 q.get("platform") or None,
                 aggregate_docs=False,
@@ -205,6 +213,8 @@ def main() -> None:
 
         status = f"✅ 文档命中@{first_hit_rank}" if hit else "❌ 文档未命中"
         print(f"[{q['id']}] {q['question']}")
+        if expanded_terms:
+            print(f"  扩展词: {' '.join(expanded_terms)}")
         print(f"  期望文档: {sorted(gold)}")
         print(f"  检索文档: {ranked_docs or '（无结果）'}")
         print(f"  文档结果: {status}")

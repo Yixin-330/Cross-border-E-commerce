@@ -42,6 +42,13 @@ python scripts/evaluate.py --questions eval/questions.id-mvp.jsonl --include-dra
 
 # 中文跨语言冒烟集（验证中文 UI 查询印尼语语料）
 python scripts/evaluate.py --questions eval/questions.zh-smoke.jsonl --include-draft --top 3 --evidence-top 20 --mode auto
+
+# rerank（第一阶段 top-50 → cross-encoder → top-5）
+python scripts/evaluate.py --questions eval/questions.id-mvp.jsonl --top 3 --evidence-top 5 --mode auto --rerank --rerank-pool 50
+
+# 中文查询 + 自动扩展 + rerank；无扩展对照用 --mode hybrid
+python scripts/evaluate.py --questions eval/questions.zh-smoke.jsonl --include-draft --top 3 --evidence-top 5 --mode auto --rerank --rerank-pool 50
+python scripts/evaluate.py --questions eval/questions.zh-smoke.jsonl --include-draft --top 3 --evidence-top 5 --mode hybrid --rerank --rerank-pool 50
 ```
 
 注意：当 `--top` 大于等于语料文档数时，hit@k 结构性为 100%，没有区分度；当前 5 篇文档建议用 `--top 3`。
@@ -70,3 +77,8 @@ clarification / uncovered 题不参与检索指标，单独统计数量，回答
 3. 标准答案先人工写，不参考模型输出；
 4. 定期抽查模型回答是否真的被引用的文档支撑；
 5. **题目语言要与语料语言一致**：语料是印尼语时用印尼语出题（或先做译文并用 `original_doc_id` 回链），否则 BM25 无法跨语言命中。
+
+
+## 答案级冻结证据评测
+
+执行方式、数据划分及人工评分规则见 [answer/README.md](answer/README.md)。首轮报告见 [runs/answer-baseline-20261102/report.md](runs/answer-baseline-20261102/report.md)。人工评分尚待填写，不能把硬检查通过率作为答案正确率。

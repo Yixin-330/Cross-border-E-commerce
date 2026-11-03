@@ -1,0 +1,14 @@
+{
+  "reference": "Codex agent review",
+  "expected_reference_rows": 12,
+  "compared_rows": 12,
+  "generated_answers": 12,
+  "exact_matches": 5,
+  "field_matches": {
+    "correctness": 9,
+    "completeness": 7,
+    "faithfulness": 9,
+    "citation_support": 9,
+    "behavior_ok": 8
+  }
+}

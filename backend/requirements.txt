@@ -6,4 +6,9 @@ httpx>=0.25.0
 python-dotenv>=1.0.0
 sse-starlette>=2.0.0
 # pydantic is a dependency of fastapi — will be auto-installed
-# anthropic - 可选，有 API Key 时安装
+# LLM SDKs (optional; mock mode works without them)
+anthropic>=0.40.0
+openai>=1.0.0
+jsonschema>=4.0.0
+langgraph>=1.0.0
+langgraph-checkpoint-sqlite>=3.0.0

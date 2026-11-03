@@ -1,0 +1,7 @@
+{
+  "checker_sha256": "b62a4c6520df5206085077e5f8f8f3a978ca0c1444d5325abcec257e485cb1d9",
+  "rescore_script_sha256": "6ad489081351b86ae32ed3c9d54a335c5777a6ebc036b1cee6cd6b72ce727209",
+  "schema_sha256": "b2cfbeca090f13a35415e35df76ec4b1050d7fee4cde6df5240f168e5ed50c9d",
+  "answers_sha256": "c9028a4012723e9dfd0d3e1b951bc3fdf2667257d67079f6a82be104f1bb822d",
+  "note": "Offline recheck only; original generation config is unchanged."
+}

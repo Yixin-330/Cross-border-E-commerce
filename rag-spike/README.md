@@ -105,7 +105,37 @@ python -m venv .venv-embed
 | 印尼语 | BM25 | 法律文本术语精确，词面匹配强；向量/混合没有超过 BM25 |
 | 中文 | hybrid | BM25 无法跨语言；hybrid 的中文条款证据命中从 33% 提升到 83% |
 
-因此 `--mode auto` 默认按查询语言路由：检测到中文 → hybrid，否则 → BM25。该结论基于当前 5 篇文档和 26 条题，属于方向性结论，扩充语料后需重跑。
+因此 `--mode auto` 默认按查询语言路由：检测到中文 → hybrid，否则 → BM25。中文查询在 auto 模式下会自动追加印尼语领域同义词；`--expand` 只用于在非 auto 模式下强制扩展。该结论基于当前 5 篇文档和 32 条题，属于方向性结论，扩充语料后需重跑。
+
+### Rerank 与查询扩展
+
+第二阶段先用 cross-encoder 对第一阶段 top-50 重排；中文查询在 auto 模式下自动追加印尼语领域同义词，扩展词同时用于召回和 rerank。
+
+```bash
+.venv-embed/Scripts/python scripts/retrieve.py "Shopee 对违反禁限售政策的卖家会采取什么措施？" \
+  --platform shopee --mode auto --rerank --rerank-pool 50
+
+.venv-embed/Scripts/python scripts/evaluate.py \
+  --questions eval/questions.zh-smoke.jsonl --include-draft --top 3 --evidence-top 5 \
+  --mode auto --rerank --rerank-pool 50
+
+# 无扩展对照（同一套中文题）
+.venv-embed/Scripts/python scripts/evaluate.py \
+  --questions eval/questions.zh-smoke.jsonl --include-draft --top 3 --evidence-top 5 \
+  --mode hybrid --rerank --rerank-pool 50
+```
+
+| 评测集 | 指标 | 基线 | +rerank | +expand +rerank |
+|---|---|---|---|---|
+| 印尼语 20 题 | evidence hit@5 | 91.67%（auto） | 100% | **100%** |
+| | evidence MRR | 0.833 | 0.933 | **0.933** |
+| 中文 12 题 | evidence hit@5 | 83.33%（hybrid + rerank，无扩展） | — | **100%** |
+| | evidence MRR | 0.715（无扩展） | — | **0.875** |
+
+- reranker 模型：`BAAI/bge-reranker-v2-m3-int8`（多语言，约 0.57GB，首次运行下载）；
+- rerank 只能重排已召回的候选；如果正确块不在 pool 内，需要先扩 pool 或做查询扩展；
+- 中文 q-zh-004 是典型例子：正确块不在 hybrid top-50 内，扩展印尼语同义词后才进入候选并被 rerank 命中；
+- 当前只有 5 篇文档，扩展词表的误召回风险还没有在大语料上验证；语料扩充后必须重跑同一套题。
 
 - 模型：`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`（384 维，多语言，CPU 可跑）；
 - 向量索引保存在 `index/embeddings.npz`，按 `chunk_id + text_hash` 增量更新；

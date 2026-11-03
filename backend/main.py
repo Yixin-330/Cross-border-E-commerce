@@ -7,6 +7,8 @@ Endpoints:
   POST /api/recommend        — Recommend Agent + Profit Agent
   POST /api/profit           — Profit Agent only
   POST /api/report           — Report Agent only
+  POST /api/knowledge        — Knowledge Agent (RAG retrieval + structured answer)
+  POST /api/knowledge/search — retrieval only, no answer synthesis
   GET  /api/health           — health check
   GET  /api/workflow-status  — streaming workflow progress (SSE)
 """
@@ -15,7 +17,7 @@ import json
 import os
 import sys
 import time
-from typing import Any
+from typing import Any, Literal
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -25,18 +27,26 @@ from pydantic import BaseModel
 # Ensure project root is on path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 from agents.supervisor import create_supervisor
 from agents.trend_agent import create_trend_agent
 from agents.competitor_agent import create_competitor_agent
 from agents.recommend_agent import create_recommend_agent
 from agents.profit_agent import create_profit_agent
 from agents.report_agent import create_report_agent
+from agents.knowledge_agent import create_knowledge_agent
 from schemas.agent_schemas import (
     TREND_AGENT_SCHEMA,
     COMPETITOR_AGENT_SCHEMA,
     RECOMMEND_AGENT_SCHEMA,
     PROFIT_AGENT_SCHEMA,
     REPORT_AGENT_SCHEMA,
+    KNOWLEDGE_AGENT_SCHEMA,
 )
 
 app = FastAPI(
@@ -66,6 +76,20 @@ class AgentRequest(BaseModel):
     budget: str = "mid"
     platform: str = "shopee"
 
+class KnowledgeRequest(BaseModel):
+    query: str
+    country: str | None = None
+    platform: str | None = None
+    top_k: int = 5
+    mode: Literal["auto", "bm25", "vector", "hybrid"] = "auto"
+    rerank: bool | None = None
+    rerank_pool: int = 50
+    use_graph: bool = True
+    graph_version: Literal["v1", "v2"] = "v2"
+    session_id: str | None = None
+    require_review: bool = False
+    resume: str | dict | None = None
+
 # ── Agent Instances (lazy init) ──
 
 _agents: dict[str, Any] = {}
@@ -79,6 +103,7 @@ def get_agent(name: str):
             "recommend": create_recommend_agent,
             "profit": create_profit_agent,
             "report": create_report_agent,
+            "knowledge": create_knowledge_agent,
         }
         if name not in factories:
             raise HTTPException(status_code=400, detail=f"Unknown agent: {name}")
@@ -96,6 +121,7 @@ def _run_agent(agent_name: str, task: str, schema_key: str | None = None) -> dic
         "recommend": RECOMMEND_AGENT_SCHEMA,
         "profit": PROFIT_AGENT_SCHEMA,
         "report": REPORT_AGENT_SCHEMA,
+        "knowledge": KNOWLEDGE_AGENT_SCHEMA,
     }
     agent = get_agent(agent_name)
     output_schema = schemas.get(schema_key or agent_name)
@@ -278,6 +304,69 @@ async def generate_report(req: AgentRequest):
     return {"success": True, "data": result}
 
 
+@app.post("/api/knowledge")
+def knowledge_query(req: KnowledgeRequest):
+    """RAG-backed compliance/knowledge answer with citations."""
+    if not req.query.strip():
+        raise HTTPException(status_code=400, detail="Query cannot be empty")
+    if not 1 <= req.top_k <= 20:
+        raise HTTPException(status_code=400, detail="top_k must be between 1 and 20")
+
+    agent = get_agent("knowledge")
+    try:
+        if req.use_graph:
+            answer, meta = agent.answer_graph(
+                req.query,
+                country=req.country,
+                platform=req.platform,
+                top_k=req.top_k,
+                mode=req.mode,
+                rerank=req.rerank,
+                rerank_pool=req.rerank_pool,
+                session_id=req.session_id,
+                require_review=req.require_review,
+                resume=req.resume,
+                graph_version=req.graph_version,
+            )
+        else:
+            answer, meta = agent.answer(
+                req.query,
+                country=req.country,
+                platform=req.platform,
+                top_k=req.top_k,
+                mode=req.mode,
+                rerank=req.rerank,
+                rerank_pool=req.rerank_pool,
+            )
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Knowledge agent failed: {exc}")
+    return {"success": True, "data": answer, "meta": meta}
+
+
+@app.post("/api/knowledge/search")
+def knowledge_search(req: KnowledgeRequest):
+    """Retrieval-only endpoint for debugging citations and ranking."""
+    if not req.query.strip():
+        raise HTTPException(status_code=400, detail="Query cannot be empty")
+    if not 1 <= req.top_k <= 20:
+        raise HTTPException(status_code=400, detail="top_k must be between 1 and 20")
+
+    agent = get_agent("knowledge")
+    try:
+        results, meta = agent.retrieve(
+            req.query,
+            country=req.country,
+            platform=req.platform,
+            top_k=req.top_k,
+            mode=req.mode,
+            rerank=req.rerank,
+            rerank_pool=req.rerank_pool,
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Knowledge retrieval failed: {exc}")
+    return {"success": True, "results": results, "meta": meta}
+
+
 # ── Entry Point ──
 
 if __name__ == "__main__":
@@ -292,9 +381,11 @@ if __name__ == "__main__":
     print(" -> POST /api/query/stream  - SSE streaming workflow")
     print("")
     print(" Agent pool: supervisor, trend, competitor, recommend, profit, report")
-    if os.environ.get("ANTHROPIC_API_KEY"):
-        print(" API Key: Set - using REAL Claude API")
+    provider = os.environ.get("LLM_PROVIDER", "anthropic").strip().lower()
+    key_name = "DEEPSEEK_API_KEY" if provider == "deepseek" else "ANTHROPIC_API_KEY"
+    if os.environ.get(key_name):
+        print(f" LLM: {provider} - API Key set, using REAL API")
     else:
-        print(" API Key: NOT SET - using mock mode")
+        print(f" LLM: {provider} - API Key NOT SET, using mock mode")
     print(separator)
     uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)

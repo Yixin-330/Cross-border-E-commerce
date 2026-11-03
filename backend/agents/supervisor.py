@@ -14,6 +14,7 @@ from agents.competitor_agent import create_competitor_agent
 from agents.recommend_agent import create_recommend_agent
 from agents.profit_agent import create_profit_agent
 from agents.report_agent import create_report_agent
+from agents.knowledge_agent import create_knowledge_agent
 from schemas.agent_schemas import SUPERVISOR_FINAL_SCHEMA
 
 
@@ -32,6 +33,7 @@ SUPERVISOR_SYSTEM_PROMPT = """你是东南亚跨境电商AI选品系统的Superv
 - 推荐需综合趋势+竞品+供应链 → 分派 RecommendAgent
 - 利润计算针对具体商品 → 分派 ProfitAgent
 - 报告生成整合所有输出 → 分派 ReportAgent
+- 合规、法规、认证、平台政策问题 → 分派 KnowledgeAgent（只依据检索证据回答）
 
 用户问题可以只涉及部分模块，此时只调度相关Agent即可。
 
@@ -43,7 +45,7 @@ class SupervisorAgent(BaseAgent):
     """Orchestrator that manages the multi-agent workflow."""
 
     def __init__(self):
-        super().__init__("SupervisorAgent", SUPERVISOR_SYSTEM_PROMPT, model="claude-sonnet-4-20250514")
+        super().__init__("SupervisorAgent", SUPERVISOR_SYSTEM_PROMPT)
         # Sub-Agent registry
         self.agents = {
             "trend": create_trend_agent(),
@@ -51,6 +53,7 @@ class SupervisorAgent(BaseAgent):
             "recommend": create_recommend_agent(),
             "profit": create_profit_agent(),
             "report": create_report_agent(),
+            "knowledge": create_knowledge_agent(),
         }
 
     def get_tool_defs(self):
@@ -92,6 +95,7 @@ class SupervisorAgent(BaseAgent):
             "recommend": "recommendation_result",
             "profit": "profit_analysis_result",
             "report": "report_generation_result",
+            "knowledge": "selection_answer",
         }
 
         from schemas.agent_schemas import (
@@ -100,6 +104,7 @@ class SupervisorAgent(BaseAgent):
             RECOMMEND_AGENT_SCHEMA,
             PROFIT_AGENT_SCHEMA,
             REPORT_AGENT_SCHEMA,
+            KNOWLEDGE_AGENT_SCHEMA,
         )
         schemas = {
             "trend": TREND_AGENT_SCHEMA,
@@ -107,6 +112,7 @@ class SupervisorAgent(BaseAgent):
             "recommend": RECOMMEND_AGENT_SCHEMA,
             "profit": PROFIT_AGENT_SCHEMA,
             "report": REPORT_AGENT_SCHEMA,
+            "knowledge": KNOWLEDGE_AGENT_SCHEMA,
         }
 
         output_schema = schemas.get(agent_name)
@@ -135,6 +141,13 @@ class SupervisorAgent(BaseAgent):
 
         # ── Step 2: Dispatch agents based on intent ──
         results = {}
+
+        # Phase 0 — Knowledge (compliance/policy questions, RAG-backed)
+        if intent.get("need_knowledge"):
+            try:
+                results["knowledge"] = self.dispatch_agent("knowledge", user_query)
+            except Exception as exc:
+                print("  [Supervisor] KnowledgeAgent failed: {}".format(exc))
 
         # Phase 1 — Trend (always needed)
         trend_prompt = self._build_trend_prompt(intent)
@@ -217,6 +230,10 @@ class SupervisorAgent(BaseAgent):
         need_competitor = "竞品" in q or "竞争" in q or "分析" in q or not category
         need_profit = "利润" in q or "成本" in q or "赚钱" in q or "计算" in q
         need_recommend = "推荐" in q or "选品" in q or "蓝海" in q or "建议" in q or "什么" in q
+        need_knowledge = any(key in q for key in (
+            "合规", "法规", "政策", "认证", "许可", "标签", "清关", "税",
+            "法律", "regulation", "compliance",
+        ))
 
         return {
             "countries": countries,
@@ -226,6 +243,7 @@ class SupervisorAgent(BaseAgent):
             "need_competitor": need_competitor,
             "need_profit": need_profit,
             "need_recommend": need_recommend,
+            "need_knowledge": need_knowledge,
             "raw_query": query,
         }
 

@@ -36,10 +36,18 @@ echo [2/3] Installing dependencies...
 pip install -q -r requirements.txt
 
 :: Check API key
-if "%ANTHROPIC_API_KEY%"=="" (
-    echo [WARN] ANTHROPIC_API_KEY not set. Running with placeholder.
-    echo        Set your key: set ANTHROPIC_API_KEY=sk-ant-...
-    echo        Or create .env file (see .env.example)
+if /I "%LLM_PROVIDER%"=="deepseek" (
+    if "%DEEPSEEK_API_KEY%"=="" (
+        echo [WARN] DEEPSEEK_API_KEY not set. Running in mock mode.
+        echo        Set your key: set DEEPSEEK_API_KEY=sk-...
+        echo        Or create .env file (see .env.example)
+    )
+) else (
+    if "%ANTHROPIC_API_KEY%"=="" (
+        echo [WARN] ANTHROPIC_API_KEY not set. Running in mock mode.
+        echo        Set your key: set ANTHROPIC_API_KEY=sk-ant-...
+        echo        Or create .env file (see .env.example)
+    )
 )
 
 :: Start server
@@ -52,6 +60,7 @@ echo   🔍 Competitor Agent  (competitive analysis)
 echo   🤖 Recommend Agent   (AI recommendations)
 echo   💰 Profit Agent      (profit calculation)
 echo   📋 Report Agent      (report generation)
+echo   📚 Knowledge Agent   (RAG compliance evidence)
 echo.
 echo   🌐 http://localhost:8000
 echo   🩺 http://localhost:8000/api/health

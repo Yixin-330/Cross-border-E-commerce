@@ -1,0 +1,19 @@
+{
+  "started_at": "2026-11-03T07:50:19.167429+00:00",
+  "provider": "deepseek",
+  "model": "deepseek-chat",
+  "temperature": 0,
+  "mock_requested": false,
+  "splits": "dev,regression",
+  "repeats": 1,
+  "questions_sha256": "67acafa21e29cf3b8722784649a3272066b6d79e628cb4dee76ef6f39c40da63",
+  "evidence_file_sha256": "3c59f13940d557deb48863d358d870a6c93d169256134bf3baa2418ab352b3f3",
+  "prompt_sha256": "eacdef6f4b755f60f98cbe94af7ccec28d013538ee26564b0800c5739403d2b0",
+  "schema_sha256": "b2cfbeca090f13a35415e35df76ec4b1050d7fee4cde6df5240f168e5ed50c9d",
+  "source_hashes": {
+    "rag-spike\\scripts\\answer_eval.py": "b62a4c6520df5206085077e5f8f8f3a978ca0c1444d5325abcec257e485cb1d9",
+    "backend\\agents\\knowledge_agent.py": "e1620f75e95d48eb2d89f843c16231924ecd1795b3d7df5248b5f92c30fc1c1c",
+    "backend\\agents\\base_agent.py": "9828f63c58612bb12dcb321403091d089c61a94d8288dde0b7580a21c07ba307"
+  },
+  "semantic_scoring": "pending human; no judge implemented"
+}
